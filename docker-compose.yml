@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  webapi:
+    build: ./WebApi
+    ports:
+      - "5001:5001"
+    depends_on:
+      - mongodb
+    environment:
+      MoviesDatabaseSettings__ConnectionString: "mongodb://gbs:geheim@mongodb:27017"
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27018:27018"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: gbs
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+
+volumes:
+  mongo-data:
